@@ -6,53 +6,34 @@
         {
             Console.WriteLine("Введите предложение.");
             string maneString = string.Empty;
-            string numberString = string.Empty;
-            string searchString = string.Empty;
-            maneString = Console.ReadLine();
-            //Console.WriteLine(maneString);
-            Console.WriteLine("Введите число символов.");  //цикл с заданием количества
-            numberString = Console.ReadLine();
-            //Console.WriteLine(numberString);
-            Console.WriteLine("Введите символы для поиска.");   //цикл с заданием кол-ва на основе numberString
-            searchString = Console.ReadLine();
-            //Console.WriteLine(searchString);
-            //Console.WriteLine("Количество символов " + searchString + ": ");
-            char searchString2 = Convert.ToChar(searchString);
-            Dictionary<char, int> symbols = new Dictionary<char, int>();    //добавить в словарь уже введённые searchString2
-            for (int i = 0; i < maneString.Length; i++)
-            {
-                ICollection<char> keys = symbols.Keys;
-                bool b = true;
-                foreach (char searchString3 in keys)
-                {
-                    if (maneString[i] == searchString3)
-                    {
-                        b = false;
-                    }
-                }
-                //if (b)
-                //{
-                //    symbols.Add(maneString[i], 1);
-                //}
-                int countSmbls = 0;
-                foreach (char searchString3 in keys)
-                {
-                    countSmbls = symbols[searchString3];
+            int numberString = 0;
+            maneString = Console.ReadLine().ToLower(); //вся строка в нижнем регистре
 
-                }
-                countSmbls = countSmbls + 1;
-                symbols.Remove(maneString[i]);  //удаление ключа??
-            }
-            ICollection<char> k = symbols.Keys;
-            Console.Write("Итоговый результат: ");
-            foreach (char searchString3 in k)
+            Console.WriteLine("Введите число символов."); 
+            numberString = int.Parse(Console.ReadLine());
+            Dictionary<char, int> symbols = new Dictionary<char, int>();
+            for (int i= 0; i< numberString; i++)
             {
-                Console.WriteLine(searchString.ToString() + " - " + symbols[searchString3].ToString());   //вывод на экран символа и его количество
+                Console.Write($"Введите символ № {i + 1}: ");
+                char newChar = Char.ToLower(Console.ReadKey().KeyChar);
+                Console.WriteLine();
+                if (!symbols.ContainsKey(newChar))
+                {
+                    symbols.Add(newChar, 0);
+                    symbols.Add(newChar, 0);
+                }
             }
-            //Console.WriteLine(searchString.Where(countSymbols => searchString.IndexOf(countSymbols) != +1).Count());
-
-            //bool isContains = maneString.Contains(searchString);
-            //Console.WriteLine(maneString);
+            foreach (char ch in maneString)
+            {
+                if (symbols.ContainsKey(Char.ToLower(ch)) || symbols.ContainsKey(Char.ToUpper(ch)))
+                 { 
+                    symbols[ch]++;
+                 }
+            }
+            foreach (var el in symbols)
+            {
+                Console.WriteLine($"Символ {el.Key} , в предложении встречается раз: {el.Value}.");
+            }
             Console.ReadKey();
         }
     }
